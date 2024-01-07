@@ -77,7 +77,7 @@ export default {
   methods: {
     async fetchClassStudents() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/ClassStudent', {
+        const response = await fetch('http://127.0.0.1:8000/classStudents', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -101,7 +101,7 @@ export default {
 
         console.log(`Classe avec l'ID ${classStudentId} supprimée localement avec succès`);
 
-        fetch(`http://127.0.0.1:8000/ClassStudent?id=${classStudentId}`, {
+        fetch(`http://127.0.0.1:8000/classStudents?id=${classStudentId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ export default {
       const classStudentId = this.selectedClassStudent.id;
 
       // Envoie une requête PATCH à l'API pour mettre à jour la classe
-      fetch(`http://127.0.0.1:8000/ClassStudent?id=${classStudentId}`, {
+      fetch(`http://127.0.0.1:8000/classStudents?id=${classStudentId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -176,14 +176,14 @@ export default {
       console.log('Ajout d\'une nouvelle classe localement');
 
       // Envoie une requête POST à l'API pour ajouter la nouvelle classe
-      fetch('http://127.0.0.1:8000/ClassStudent', {
+      fetch('http://127.0.0.1:8000/classStudents', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           idLesson: this.newClassStudent.idLesson,
-          idUsers: this.newClassStudent.idUsersString.split(',').map(id => id.trim()),
+          idUsers: this.convertIdUsersToArray(this.newClassStudent.idUsersString),
         }),
       })
         .then(response => {
@@ -200,6 +200,10 @@ export default {
         .catch(error => {
           console.error('Erreur lors de l\'ajout de la classe sur le serveur:', error.message);
         });
+    },
+    convertIdUsersToArray(idUsersString) {
+      // Fonction pour convertir la chaîne en tableau d'entiers
+      return idUsersString.split(',').map(id => parseInt(id.trim()));
     },
   },
 };

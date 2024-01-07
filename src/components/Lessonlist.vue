@@ -103,7 +103,7 @@
       this.fetchLessons();
     },
     methods: {
-      async fetchLessons() {
+    async fetchLessons() {
         try {
           const response = await fetch('http://127.0.0.1:8000/lessons', {
             headers: {
@@ -120,13 +120,13 @@
         } catch (error) {
           console.error('Erreur lors de la récupération des cours', error);
         }
-      },
-      formatDate(dateString) {
+    },
+    formatDate(dateString) {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
         const date = new Date(dateString);
         return date.toLocaleDateString('fr-FR', options);
-      },
-      deleteLesson(lessonId) {
+    },
+    deleteLesson(lessonId) {
         console.log(`Tentative de suppression du cours avec l'ID ${lessonId}`);
         const index = this.lessons.findIndex(lesson => lesson.id === lessonId);
         if (index !== -1) {
@@ -155,7 +155,7 @@
         } else {
           console.error(`Cours avec l'ID ${lessonId} non trouvé localement`);
         }
-      },
+    },
 
     showEditModal(lesson) {
       this.selectedLesson = lesson;
