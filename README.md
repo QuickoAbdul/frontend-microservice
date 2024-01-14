@@ -27,3 +27,8 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### PORT Micro-service Planning
+```sh
+127.0.0.1:8000
+```
