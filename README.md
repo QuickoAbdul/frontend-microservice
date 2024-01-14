@@ -30,8 +30,8 @@ npm run build
 
 ## Tutoriel Installation : 
 - Pour lancer ce projet, créer un dossier [API3] 
-Ouvrer un IDE en vous plaçant sur ce dossier
-Executer 4 commandes 
+- Ouvrer un IDE en vous plaçant sur ce dossier
+- Puis executer 4 commandes :
 
 ```sh
 git clone https://github.com/QuickoAbdul/frontend-microservice.git
