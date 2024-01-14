@@ -47,7 +47,7 @@ Executer ensuite 4 terminal différent et renomer les pour éviter les confusion
 
 ![image](https://github.com/QuickoAbdul/frontend-microservice/assets/90459692/c08adcd8-3e13-4c32-b764-10f80cd01766)
 
-### : Terminal VueJS
+### Terminal VueJS
 Executer les commandes 
 ```sh
 cd .\frontend-microservice
@@ -63,7 +63,7 @@ npm run dev
 
 Le frontEnd sera executer alors sur un premier port au hasard exemple :(localhost:1573)
 
-### : Terminal Planning (Quentin & Julian) (Installer Php et Symfony avant)
+### Terminal Planning (Quentin & Julian) (Installer Php et Symfony avant)
 Executer les commandes 
 ```sh
 cd .\Management_Planning_API\
