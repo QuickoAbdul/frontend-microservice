@@ -73,6 +73,14 @@ cd .\Management_Planning_API\
 composer install 
 ```
 
+- Puis ouvrer votre gestionnaire de DATABASE et créer une base de données avec pour nom planning
+- Executer dans le terminal la commande suivant : 
+
+```sh
+php bin/console d:m:m
+```
+
+Enfin executer le serveur 
 ```sh
 Symfony serve
 ```
