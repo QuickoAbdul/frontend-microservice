@@ -63,8 +63,9 @@ npm run dev
 
 Le frontEnd sera executer alors sur un premier port au hasard exemple :(localhost:1573)
 
-### : Terminal Planning (Quentin & Julian) (Installer Php et Symfony avant)
-Executer les commandes 
+## : Terminal Planning (Quentin & Julian) (Installer Php et Symfony avant)
+- Déplacer vous dans le terminal Planning
+- Executer les commandes  
 ```sh
 cd .\Management_Planning_API\
 ```
@@ -87,4 +88,25 @@ Symfony serve
 
 Ce microservice sera alors executer sur le port (127.0.0.1:8000)
 
+### : Terminal Users_management (Quentin & Julian) (Installer Php et Symfony avant)
+- Déplacer vous dans le terminal Users_management
+- Executer les commandes (si besoin appliquer la commande 2 fois pour être bien placé)
+```sh
+cd .\users_management\
+```
+
+```sh
+composer install 
+```
+Si vous rencontrer une erreur Php alors ouvrer le fichier php.ini sur votre machine et modifier la ligne : 
+
+```sh
+;extension=sodium
+```
+EN ->
+```sh
+extension=sodium
+```
+Le reste ne fonctionne pas impossible à lancer le microservice pour l'instant
 Faire le reste du readme
+
