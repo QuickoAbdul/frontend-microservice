@@ -17,6 +17,11 @@
         </li>
       </ul>
     </div>
+
+     <div class="ml-auto">
+        <router-link to="/login" class="nav-link">Connexion</router-link>
+        <router-link to="/register" class="nav-link">Inscription</router-link>
+      </div>
   </nav>
 </template>
 
