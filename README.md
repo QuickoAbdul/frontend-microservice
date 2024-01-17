@@ -88,7 +88,7 @@ Symfony serve
 
 Ce microservice sera alors executer sur le port (127.0.0.1:8000)
 
-### : Terminal Users_management (Quentin & Julian) (Installer Php et Symfony avant)
+### : Terminal Users_management 
 - Déplacer vous dans le terminal Users_management
 - Executer les commandes (si besoin appliquer la commande 2 fois pour être bien placé)
 ```sh
