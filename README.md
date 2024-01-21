@@ -44,8 +44,14 @@ cd .\Management_Planning_API\
 composer install 
 ```
 
-- Puis ouvrer votre gestionnaire de DATABASE et créer une base de données avec pour nom planning
-- Executer dans le terminal la commande suivant : 
+- Puis ouvrer votre gestionnaire de DATABASE (exmple: MySQl) et créer une base de données avec pour nom planning
+- Configurer le .env par rapport à la votre
+  
+```sh
+DATABASE_URL="mysql://root:@127.0.0.1:3306/planning"
+```
+
+- Executer dans le terminal la commande pour migrer les tables dans votre DB suivant : 
 
 ```sh
 php bin/console d:m:m
