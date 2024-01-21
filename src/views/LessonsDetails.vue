@@ -2,17 +2,17 @@
     <div>
       <h2>Cours et Planning</h2>
       <!-- Ajoute les composants nécessaires ici -->
-      <StudentList />
+      <LessonDetail />
     </div>
   </template>
   
   
   <script>
-  import StudentList from '../components/Studentlist.vue';
+  import LessonDetail from '../components/Lessondetail.vue';
   
   export default {
       components: {
-        StudentList,
+        LessonDetail,
       },
   };
   </script>

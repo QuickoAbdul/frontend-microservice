@@ -32,9 +32,19 @@ export const usersmocks = [
       {
         idUtilisateur: 4,
         idRole: 3,
-        lastname: 'Soltysiak',
-        firstname: 'Clément',
-        email: 'clement@free.fr',
+        lastname: 'Shahzad',
+        firstname: 'abdul rahman',
+        email: 'abdulrahman@free.fr',
+        phone: '07 81 34 96 43',
+        created_at: '2022-09-5 10:37:51',
+        updated_at: '2023-10-5 15:45:34'
+      },
+      {
+        idUtilisateur: 5,
+        idRole: 5,
+        lastname: 'Shahzad',
+        firstname: 'abdul rahman',
+        email: 'abdulrahman@free.fr',
         phone: '07 81 34 96 43',
         created_at: '2022-09-5 10:37:51',
         updated_at: '2023-10-5 15:45:34'
