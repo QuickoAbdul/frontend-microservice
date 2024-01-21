@@ -11,6 +11,7 @@
           <th scope="col">Lieu</th>
           <th scope="col">Actions</th>
           <th scope="col">Actions</th>
+          <th scope="col">Details</th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +25,9 @@
           </td>
           <td>
             <button class="btn btn-warning" @click="showEditModal(lesson)" >Modifier</button>
+          </td>
+          <td>
+            <button class="btn btn-primary" @click="seeLesson(lesson.id)" >Voir</button> 
           </td>
         </tr>
       </tbody>
@@ -234,7 +238,11 @@
         console.error('Erreur lors de l\'ajout de la leçon sur le serveur:', error.message);
       });
     },
+    seeLesson(lessonId) {
+      console.log(`Tentative de voir le cours avec l'ID ${lessonId}`);
+      this.$router.push({ name: 'lesson-details', params: { id: lessonId } });
     },
+  },
   };
   </script>
   

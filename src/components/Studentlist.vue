@@ -54,14 +54,24 @@
         <button class="btn btn-secondary" @click="cancelAddForm">Annuler</button>
       </div>
     </div>
+
+      <h2>Users</h2>
+      <ul>
+        <li v-for="user in usersmocks" :key="user.id">
+          {{ user.lastname }}
+        </li>
+      </ul>
   </div>
 </template>
 
 <script>
+import { usersmocks } from "../mocks/user";
+
 export default {
   data() {
     return {
       classStudents: [],
+      usersmocks: usersmocks,
       showModal: false,
       selectedClassStudent: null,
       showAddForm: false,
@@ -72,7 +82,9 @@ export default {
     };
   },
   mounted() {
-    this.fetchClassStudents();
+    this.fetchClassStudents().then(() => {
+    (this.classStudents);
+  });    this.afficherusers();
   },
   methods: {
     async fetchClassStudents() {
@@ -123,7 +135,6 @@ export default {
         console.error(`Classe avec l'ID ${classStudentId} non trouvée localement`);
       }
     },
-
     showEditModal(classStudent) {
       this.selectedClassStudent = { ...classStudent, idUsersString: classStudent.idUsers.join(', ') };
       this.showModal = true;
@@ -204,6 +215,9 @@ export default {
     convertIdUsersToArray(idUsersString) {
       // Fonction pour convertir la chaîne en tableau d'entiers
       return idUsersString.split(',').map(id => parseInt(id.trim()));
+    },
+    afficherusers() {
+      console.log(usersmocks);
     },
   },
 };
