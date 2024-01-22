@@ -19,6 +19,8 @@
     </div>
 
      <div class="ml-auto">
+      <router-link v-if="isLoggedIn" @click.prevent="logout" class="nav-link" to="#">Déconnexion</router-link>
+
         <router-link to="/login" class="nav-link">Connexion</router-link>
         <router-link to="/register" class="nav-link">Inscription</router-link>
       </div>
@@ -28,6 +30,30 @@
 <script>
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  methods: {
+    // ... autres méthodes du composant ...
+
+    logout() {
+      // Effacez le token du localStorage
+      localStorage.removeItem('token');
+      
+      // Mettez à jour la propriété isLoggedIn dans le composant
+      this.isLoggedIn = false;
+
+      // Redirigez l'utilisateur vers la page de déconnexion (ou une autre page selon vos besoins)
+      this.$router.push('/'); // Assurez-vous que vous avez configuré le routeur Vue.js
+    },
+  },
+  created() {
+    // Vérifiez si l'utilisateur est connecté lors de la création du composant
+    const storedToken = localStorage.getItem('token');
+    this.isLoggedIn = !!storedToken;
+  },
 };
 </script>
 
