@@ -8,6 +8,7 @@
           <th scope="col">Nom</th>
           <th scope="col">Prénom</th>
           <th scope="col">Email</th>
+          <th scope="col">Roles</th>
           <th scope="col">Téléphone</th>
           <th scope="col">Actions</th>
           <th scope="col">Actions</th>
@@ -18,6 +19,7 @@
           <td><strong>{{ user.lastname }}</strong></td>
           <td>{{ user.firstname }}</td>
           <td>{{ user.email }}</td>
+          <td>{{ mapRoleIdToRoleName(user.idRole) }}</td>
           <td>{{ user.phone }}</td>
           <td>
             <button class="btn btn-danger" @click="deleteUser(user.idUtilisateur)">Supprimer</button>
@@ -217,6 +219,18 @@ export default {
         console.error('Erreur lors de l\'ajout de l\'utilisateur sur le serveur:', error.message);
       });
     },
+    mapRoleIdToRoleName(roleId) {
+    switch (roleId) {
+      case 1:
+        return 'Administrateur';
+      case 2:
+        return 'Enseignant';
+      case 3:
+        return 'Élève';
+      default:
+        return 'Inconnu';
+    }
+  },
   },
 };
 </script>

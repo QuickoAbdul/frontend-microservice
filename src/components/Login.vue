@@ -40,6 +40,9 @@ export default {
           // Stocker le token dans le localStorage
           localStorage.setItem('token', data.token);
 
+           // Décoder le token pour obtenir les informations
+        const decodedToken = this.decodeToken(data.token);
+        console.log(decodedToken);
           // Mettre à jour la propriété token dans le composant
           this.token = data.token;
 
@@ -51,6 +54,11 @@ export default {
           console.error(error);
         });
     },
+    decodeToken(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(atob(base64));
+  },
     checkIfLoggedIn() {
       // Vérifier si le token est déjà présent dans le localStorage
       const storedToken = localStorage.getItem('token');

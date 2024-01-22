@@ -19,11 +19,11 @@
     </div>
 
      <div class="ml-auto">
+      <span v-if="isLoggedIn" class="nav-link">{{ firstname }}</span>
       <router-link v-if="isLoggedIn" @click.prevent="logout" class="nav-link" to="#">Déconnexion</router-link>
 
         <router-link to="/login" class="nav-link">Connexion</router-link>
-        <router-link to="/register" class="nav-link">Inscription</router-link>
-      </div>
+    </div>
   </nav>
 </template>
 
@@ -44,6 +44,8 @@ export default {
       
       // Mettez à jour la propriété isLoggedIn dans le composant
       this.isLoggedIn = false;
+      this.firstname = null;
+
 
       // Redirigez l'utilisateur vers la page de déconnexion (ou une autre page selon vos besoins)
       this.$router.push('/'); // Assurez-vous que vous avez configuré le routeur Vue.js
@@ -52,7 +54,15 @@ export default {
   created() {
     // Vérifiez si l'utilisateur est connecté lors de la création du composant
     const storedToken = localStorage.getItem('token');
-    this.isLoggedIn = !!storedToken;
+
+    if (storedToken) {
+      // Décoder le token pour obtenir les informations de l'utilisateur
+      const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
+      
+      // Mettre à jour les propriétés dans le composant
+      this.isLoggedIn = true;
+      this.firstname = decodedToken.firstname; // Assurez-vous que le nom d'utilisateur est présent dans le token
+    }
   },
 };
 </script>
