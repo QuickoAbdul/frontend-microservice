@@ -109,7 +109,7 @@
     methods: {
     async fetchLessons() {
         try {
-          const response = await fetch('http://127.0.0.1:8000/lessons', {
+          const response = await fetch('http://127.0.0.1:8001/lessons', {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -138,7 +138,7 @@
 
           console.log(`Cours avec l'ID ${lessonId} supprimé localement avec succès`);
 
-          fetch(`http://127.0.0.1:8000/lessons?id=${lessonId}`, {
+          fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -177,7 +177,7 @@
     const lessonId = this.selectedLesson.id;
 
     // Envoie une requête PATCH à l'API pour mettre à jour le cours
-    fetch(`http://127.0.0.1:8000/lessons?id=${lessonId}`, {
+    fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -216,7 +216,7 @@
       // Logique pour ajouter la nouvelle leçon
       console.log('Ajout d\'une nouvelle leçon localement');
       // Envoie une requête POST à l'API pour ajouter la nouvelle leçon
-      fetch('http://127.0.0.1:8000/lessons', {
+      fetch('http://127.0.0.1:8001/lessons', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

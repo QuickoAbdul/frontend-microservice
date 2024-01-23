@@ -3,14 +3,17 @@ import UserManagement from '@/views/UserManagement.vue';
 import LessonManagement from '@/views/LessonManagement.vue';
 import AttendanceManagement from '@/views/AttendanceManagement.vue';
 import LessonsDetails from '@/views/LessonsDetails.vue';
+import UserDetails from '@/views/UserDetails.vue';
 import Login from '../components/Login.vue';
 
 const routes = [
   { path: '/', component: Login },
   { path: '/users', component: UserManagement, meta: { requiresAuth: true } },
-  { path: '/courses', component: LessonManagement, meta: { requiresAuth: true } },
+  { path: '/lessons', component: LessonManagement, meta: { requiresAuth: true } },
   { path: '/attendance', component: AttendanceManagement, meta: { requiresAuth: true } },
   { path: '/lessons/:id', name: 'lesson-details', component: LessonsDetails, meta: { requiresAuth: true } },
+  { path: '/user/:id', name: 'user-details', component: UserDetails, meta: { requiresAuth: true } },
+
   // Ajoute d'autres routes au besoin
 ];
 

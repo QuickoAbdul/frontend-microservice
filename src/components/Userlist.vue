@@ -12,6 +12,7 @@
           <th scope="col">Téléphone</th>
           <th scope="col">Actions</th>
           <th scope="col">Actions</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,9 @@
           </td>
           <td>
             <button class="btn btn-warning" @click="showEditModal(user)" >Modifier</button>
+          </td>
+          <td>
+            <button class="btn btn-primary" @click="seeLesson(user.idUtilisateur)" >Voir</button>
           </td>
         </tr>
       </tbody>
@@ -55,17 +59,23 @@
     <div v-if="showAddForm" class="modal-overlay">
       <div class="modal-content">
         <!-- Champs d'ajout -->
+        <label for="addidRole">IdRole:</label>
+        <input type="text" id="addidRole" v-model="newUser.idRole">
+
         <label for="addLastName">Nom:</label>
         <input type="text" id="addLastName" v-model="newUser.lastname">
 
         <label for="addFirstName">Prénom:</label>
         <input type="text" id="addFirstName" v-model="newUser.firstname">
 
+        <label for="addPhone">Téléphone:</label>
+        <input type="text" id="addPhone" v-model="newUser.phone">
+
         <label for="addEmail">Email:</label>
         <input type="text" id="addEmail" v-model="newUser.email">
 
-        <label for="addPhone">Téléphone:</label>
-        <input type="text" id="addPhone" v-model="newUser.phone">
+        <label for="addPassword">Mot de passe: (8 Caractères)</label>
+        <input type="text" id="addPassword" v-model="newUser.password">
 
         <!-- Boutons Ajouter et Annuler -->
         <button class="btn btn-primary" @click="addUser">Ajouter</button>
@@ -84,10 +94,12 @@ export default {
       selectedUser: null,
       showAddForm: false,
       newUser: {
+        idRole: '',
         lastname: '',
         firstname: '',
-        email: '',
         phone: '',
+        email: '',
+        password:'',
       },
     };
   },
@@ -100,10 +112,12 @@ export default {
 
     //MicroService User à décommenter une fois connecté à la BDD
     async fetchUsers() {
+      const token = localStorage.getItem('token');
       try {
         const response = await fetch('http://127.0.0.1:8000/user', {
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête
           },
         });
 
@@ -123,6 +137,7 @@ export default {
       return date.toLocaleDateString('fr-FR', options);
     },
     deleteUser(userId) {
+      const token = localStorage.getItem('token');
       const index = this.users.findIndex(user => user.idUtilisateur === userId);
       if (index !== -1) {
         this.users.splice(index, 1);
@@ -131,6 +146,7 @@ export default {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête
           },
         })
         .then(response => {
@@ -196,11 +212,13 @@ export default {
     },
     addUser() {
       console.log('Ajout d\'un nouvel utilisateur localement');
+      const token = localStorage.getItem('token');
 
       fetch('http://127.0.0.1:8000/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête
         },
         body: JSON.stringify(this.newUser),
       })
@@ -218,6 +236,7 @@ export default {
       .catch(error => {
         console.error('Erreur lors de l\'ajout de l\'utilisateur sur le serveur:', error.message);
       });
+      console.log(this.newUser)
     },
     mapRoleIdToRoleName(roleId) {
     switch (roleId) {
@@ -230,7 +249,11 @@ export default {
       default:
         return 'Inconnu';
     }
-  },
+    },
+    seeLesson(lessonId) {
+      console.log(`Tentative de voir le cours avec l'ID ${lessonId}`);
+      this.$router.push({ name: 'user-details', params: { id: lessonId } });
+    },
   },
 };
 </script>

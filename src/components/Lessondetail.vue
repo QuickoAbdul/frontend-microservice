@@ -60,7 +60,7 @@
         methods: {
         async fetchLessonDetails(lessonId) {
             try {
-            const response = await fetch(`http://127.0.0.1:8000/classStudents?idLesson=${lessonId}`, {
+            const response = await fetch(`http://127.0.0.1:8001/classStudents?idLesson=${lessonId}`, {
                 headers: {
                 'Content-Type': 'application/json',
                 },
@@ -119,7 +119,7 @@
 
       // Envoie une requête PATCH à l'API pour mettre à jour la leçon avec les nouvelles valeurs
       console.log('Envoi de la requête :', updatedLessonDetails);
-      fetch(`http://127.0.0.1:8000/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
+      fetch(`http://127.0.0.1:8001/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
         method: 'PATCH',  // Ou PATCH selon ce que l'API supporte
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +146,7 @@
 
       console.log('Updated Lesson Details:', updatedLessonDetails);
 
-      fetch(`http://127.0.0.1:8000/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
+      fetch(`http://127.0.0.1:8001/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -162,7 +162,7 @@
         },
         async getLessonById(lessonId) {
             try {
-            const response = await fetch(`http://127.0.0.1:8000/lessons?id=${lessonId}`, {
+            const response = await fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
                 headers: {
                 'Content-Type': 'application/json',
                 },

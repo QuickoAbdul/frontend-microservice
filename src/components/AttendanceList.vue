@@ -8,6 +8,8 @@
             <th scope="col">ID</th>
             <th scope="col">ID Étudiant</th>
             <th scope="col">ID Cours</th>
+            <th scrop="col">Status</th>
+            <th scope="col">Actions</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
@@ -16,8 +18,12 @@
             <td>{{ attendance.id }}</td>
             <td>{{ attendance.studentId }}</td>
             <td>{{ attendance.lessonId }}</td>
+            <td>{{ attendance.status }}</td>
             <td>
               <button class="btn btn-danger" @click="deleteAttendance(attendance.id)">Supprimer</button>
+            </td>
+            <td>
+              <button class="btn btn-danger" @click="voirplus(attendance.id)">Supprimer</button>
             </td>
           </tr>
         </tbody>
@@ -49,6 +55,7 @@
         newAttendance: {
           studentId: null,
           lessonId: null,
+          status: null,
         },
       };
     },
@@ -56,26 +63,29 @@
       this.fetchAttendances();
     },
     methods: {
-      fetchAttendances() {
-        // Simuler un délai d'attente pour simuler une requête asynchrone
-        setTimeout(() => {
-          // Données simulées
-          const mockData = [
-            { id: 1, studentId: 1, lessonId: 101 },
-            { id: 2, studentId: 2, lessonId: 102 },
-            { id: 3, studentId: 3, lessonId: 103 },
-          ];
+     async fetchAttendances() {
+        try {
+          const response = await fetch('http://localhost:3000/attendance/student/1', {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
   
-          // Mettez à jour le state avec les données simulées
-          this.attendances = mockData;
-        }, 1000); // Simule un délai de 1 seconde
+          if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des cours');
+          }
+  
+          const data = await response.json();
+          this.attendances = data;
+        } catch (error) {
+          console.error('Erreur lors de la récupération des cours', error);
+        }
       },
   
       deleteAttendance(attendanceId) {
         // Simuler la suppression localement
         this.attendances = this.attendances.filter(attendance => attendance.id !== attendanceId);
   
-        // En cas d'utilisation réelle de l'API, faire une requête DELETE à l'API ici
       },
   
       toggleAddForm() {

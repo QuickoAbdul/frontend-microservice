@@ -10,7 +10,7 @@
           <router-link to="/users" class="nav-link">Gestion Utilisateur</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/courses" class="nav-link">Cours & Planning</router-link>
+          <router-link to="/lessons" class="nav-link">Cours & Planning</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/attendance" class="nav-link">Présence</router-link>
@@ -18,12 +18,12 @@
       </ul>
     </div>
 
-     <div class="ml-auto">
-      <span v-if="isLoggedIn" class="nav-link">{{ firstname }}</span>
-      <router-link v-if="isLoggedIn" @click.prevent="logout" class="nav-link" to="#">Déconnexion</router-link>
+    <div class="ml-auto">
+  <span v-if="isLoggedIn" class="nav-link">{{ firstname }}</span>
+  <router-link v-if="isLoggedIn" @click.prevent="logout" class="nav-link" to="#">Déconnexion</router-link>
+  <router-link v-else to="/" class="nav-link">Connexion</router-link>
+</div>
 
-        <router-link to="/login" class="nav-link">Connexion</router-link>
-    </div>
   </nav>
 </template>
 
