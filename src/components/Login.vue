@@ -35,23 +35,23 @@ export default {
       const queryString = new URLSearchParams(loginData).toString();
 
       fetch(`http://localhost:8000/login?${queryString}`)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erreur lors de la connexion');
+          }
+          return response.json();
+        })
         .then(data => {
-          // Stocker le token dans le localStorage
           localStorage.setItem('token', data.token);
-
-           // Décoder le token pour obtenir les informations
-        const decodedToken = this.decodeToken(data.token);
-        console.log(decodedToken);
-          // Mettre à jour la propriété token dans le composant
+          const decodedToken = this.decodeToken(data.token);
+          console.log(decodedToken);
           this.token = data.token;
-
-          // Rediriger l'utilisateur vers la page "user" après la connexion
-          this.$router.push('/users'); // Assurez-vous que vous avez configuré le routeur Vue.js
+          this.$router.push('/users');
         })
         .catch(error => {
-          // Gérer les erreurs ici
-          console.error(error);
+          console.error('Erreur lors de la connexion', error);
+          // En cas d'échec de la connexion, effacer le token du localStorage
+          localStorage.removeItem('token');
         });
     },
     decodeToken(token) {
