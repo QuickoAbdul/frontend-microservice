@@ -52,7 +52,7 @@ export default {
             this.$router.push('/users');
           } else if (decodedToken.user.idRole === 3) {
             // Rôle 3, rediriger vers la page des leçons
-            this.$router.push('/lessons');
+            this.$router.push({ name: 'meslessons', params: { id: decodedToken.user.id } });
           } else {
             // Gérer d'autres cas selon vos besoins
             console.error('Rôle non géré');

@@ -5,15 +5,16 @@ import AttendanceManagement from '@/views/AttendanceManagement.vue';
 import LessonsDetails from '@/views/LessonsDetails.vue';
 import UserDetails from '@/views/UserDetails.vue';
 import Login from '../components/Login.vue';
+import Meslessons from '@/views/Meslessons.vue';
 
 const routes = [
   { path: '/', component: Login },
-  { path: '/users', component: UserManagement, meta: { requiresAuth: true, role: 1 } },
-  { path: '/lessons', component: LessonManagement, meta: { requiresAuth: true, role: 3 } },
+  { path: '/users', component: UserManagement, meta: { requiresAuth: true, role: 3 } },
+  { path: '/lessons', component: LessonManagement, meta: { requiresAuth: true, role: 1 } },
   { path: '/attendance', component: AttendanceManagement, meta: { requiresAuth: true } },
-  { path: '/lessons/:id', name: 'lesson-details', component: LessonsDetails, meta: { requiresAuth: true, role: 3 } },
+  { path: '/lessons/:id', name: 'lesson-details', component: LessonsDetails, meta: { requiresAuth: true, role: 1 } },
   { path: '/user/:id', name: 'user-details', component: UserDetails, meta: { requiresAuth: true, role: 1 } },
-
+  { path: '/meslessons/:id', name: 'meslessons', component: Meslessons, meta: { requiresAuth: true, role: 3 } },
   // Ajoute d'autres routes au besoin
 ];
 
