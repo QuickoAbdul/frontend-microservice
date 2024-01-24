@@ -20,8 +20,8 @@
 export default {
   data() {
     return {
-      email: 'john.doe@example.com', // Initialisez avec la valeur par défaut
-      password: 'motdepasse123', // Initialisez avec la valeur par défaut
+      email: 'user3@gmail.com', // Initialisez avec la valeur par défaut
+      password: '12345678', // Initialisez avec la valeur par défaut
       token: null,
     };
   },
@@ -46,7 +46,17 @@ export default {
           const decodedToken = this.decodeToken(data.token);
           console.log(decodedToken);
           this.token = data.token;
-          this.$router.push('/users');
+              // Redirection en fonction du rôle de l'utilisateur
+          if (decodedToken.user.idRole === 1) {
+            // Rôle 1, rediriger vers la page des utilisateurs
+            this.$router.push('/users');
+          } else if (decodedToken.user.idRole === 3) {
+            // Rôle 3, rediriger vers la page des leçons
+            this.$router.push('/lessons');
+          } else {
+            // Gérer d'autres cas selon vos besoins
+            console.error('Rôle non géré');
+          }
         })
         .catch(error => {
           console.error('Erreur lors de la connexion', error);
@@ -70,7 +80,7 @@ export default {
       return !!storedToken;
     },
   },
-  created() {
+  /*created() {
     // Appeler la méthode pour vérifier si l'utilisateur est connecté
     const isLoggedIn = this.checkIfLoggedIn();
 
@@ -86,7 +96,7 @@ export default {
       this.token = null;
       // Redirigez l'utilisateur vers la page de déconnexion (ou une autre page selon vos besoins)
       this.$router.push('/logout'); // Assurez-vous que vous avez configuré le routeur Vue.js
-    },
+    },*/
 };
 
   </script>

@@ -38,6 +38,9 @@
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-content">
         <!-- Champs d'édition -->
+        <label for="editIdRole">ID du rôle:</label>
+        <input type="text" id="editIdRole" v-model="selectedUser.idRole">
+
         <label for="editLastName">Nom:</label>
         <input type="text" id="editLastName" v-model="selectedUser.lastname">
 
@@ -49,6 +52,9 @@
 
         <label for="editPhone">Téléphone:</label>
         <input type="text" id="editPhone" v-model="selectedUser.phone">
+
+        <label for="editPassword">Mot de passe: (8Caractères)</label>
+        <input type="password" id="editPassword" v-model="selectedUser.password">
 
         <!-- Boutons Appliquer et Annuler -->
         <button class="btn btn-primary" @click="applyChanges">Appliquer</button>
@@ -176,17 +182,21 @@ export default {
     applyChanges() {
       console.log('Modifications appliquées localement');
       const userId = this.selectedUser.idUtilisateur;
+      const token = localStorage.getItem('token');
 
       fetch(`http://127.0.0.1:8000/user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête
         },
         body: JSON.stringify({
+          idRole: this.selectedUser.idRole,  // Ajoutez cette ligne pour inclure idRole dans la modification
           lastname: this.selectedUser.lastname,
           firstname: this.selectedUser.firstname,
           email: this.selectedUser.email,
           phone: this.selectedUser.phone,
+          password: this.selectedUser.password,  // Correction ici
         }),
       })
       .then(response => {
