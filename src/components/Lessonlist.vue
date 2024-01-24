@@ -213,31 +213,58 @@
       this.showAddForm = false;
     },
     addLesson() {
-      // Logique pour ajouter la nouvelle leçon
-      console.log('Ajout d\'une nouvelle leçon localement');
-      // Envoie une requête POST à l'API pour ajouter la nouvelle leçon
-      fetch('http://127.0.0.1:8001/lessons', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.newLesson),
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Erreur lors de l\'ajout de la leçon');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Nouvelle leçon ajoutée avec succès sur le serveur');
-        this.showAddForm = false; // Ferme le formulaire après l'ajout
-        this.fetchLessons(); // Rafraîchit la liste des leçons
-      })
-      .catch(error => {
-        console.error('Erreur lors de l\'ajout de la leçon sur le serveur:', error.message);
-      });
+  console.log('Ajout d\'une nouvelle leçon localement');
+  
+  // Envoie une requête POST à l'API pour ajouter la nouvelle leçon
+  fetch('http://127.0.0.1:8001/lessons', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify(this.newLesson),
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erreur lors de l\'ajout de la leçon');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Nouvelle leçon ajoutée avec succès sur le serveur');
+    const lessonId = data.id; // Récupérer l'ID de la nouvelle leçon
+    
+    // Envoie une requête POST à l'API pour ajouter un enregistrement dans classStudents
+    fetch('http://127.0.0.1:8001/classStudents', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idLesson: lessonId, // Utiliser l'ID de la leçon nouvellement créée
+        idUsers: [],
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'ajout de la leçon à classStudents');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Enregistrement ajouté avec succès à classStudents');
+    })
+    .catch(error => {
+      console.error('Erreur lors de l\'ajout de la leçon à classStudents:', error.message);
+    });
+
+    this.showAddForm = false; // Ferme le formulaire après l'ajout
+    this.fetchLessons(); // Rafraîchit la liste des leçons
+  })
+  .catch(error => {
+    console.error('Erreur lors de l\'ajout de la leçon sur le serveur:', error.message);
+  });
+},
+
     seeLesson(lessonId) {
       console.log(`Tentative de voir le cours avec l'ID ${lessonId}`);
       this.$router.push({ name: 'lesson-details', params: { id: lessonId } });
