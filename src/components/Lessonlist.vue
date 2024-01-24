@@ -131,36 +131,76 @@
         return date.toLocaleDateString('fr-FR', options);
     },
     deleteLesson(lessonId) {
-        console.log(`Tentative de suppression du cours avec l'ID ${lessonId}`);
-        const index = this.lessons.findIndex(lesson => lesson.id === lessonId);
-        if (index !== -1) {
-          this.lessons.splice(index, 1);
+    console.log(`Tentative de suppression du cours avec l'ID ${lessonId}`);
 
-          console.log(`Cours avec l'ID ${lessonId} supprimé localement avec succès`);
-
-          fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Erreur lors de la suppression du cours');
-            }
-            return response.json();
-          })
-          .then(data => {
-            console.log(`Cours avec l'ID ${lessonId} supprimé avec succès sur le serveur`);
-          })
-          .catch(error => {
-            console.error('Erreur lors de la suppression du cours sur le serveur:', error.message);
-          });
-        } else {
-          console.error(`Cours avec l'ID ${lessonId} non trouvé localement`);
+    // Récupérer l'ID de la leçon associée à classStudents
+    fetch(`http://127.0.0.1:8001/classStudents?idLesson=${lessonId}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération de l\'ID de la leçon dans classStudents');
         }
-    },
-
+        return response.json();
+    })
+    .then(data => {
+        if (data && data.length > 0) {
+            const classStudentsId = data[0].id;
+            console.log(`ID de classStudents associé à la leçon avec l'ID ${lessonId} : ${classStudentsId}`);
+            
+            // Suppression de l'enregistrement dans classStudents côté serveur
+            return fetch(`http://127.0.0.1:8001/classStudents?id=${classStudentsId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        } else {
+            console.error(`Aucun enregistrement trouvé dans classStudents pour la leçon avec l'ID ${lessonId}`);
+            return null;
+        }
+    })
+    .then(response => {
+        if (response && !response.ok) {
+            throw new Error('Erreur lors de la suppression de la leçon de classStudents');
+        }
+        return response ? response.json() : null;
+    })
+    .then(data => {
+        if (data) {
+            console.log(`Enregistrement de classStudents pour la leçon avec l'ID ${lessonId} supprimé avec succès sur le serveur`);
+            
+            // Suppression de la leçon côté serveur
+            return fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+    })
+    .then(response => {
+        if (response && !response.ok) {
+            throw new Error('Erreur lors de la suppression du cours');
+        }
+        return response ? response.json() : null;
+    })
+    .then(data => {
+        if (data) {
+            console.log(`Cours avec l'ID ${lessonId} supprimé avec succès sur le serveur`);
+            
+            // Suppression de la leçon localement
+            const index = this.lessons.findIndex(lesson => lesson.id === lessonId);
+            if (index !== -1) {
+                this.lessons.splice(index, 1);
+                console.log(`Cours avec l'ID ${lessonId} supprimé localement avec succès`);
+            } else {
+                console.error(`Cours avec l'ID ${lessonId} non trouvé localement`);
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la suppression du cours sur le serveur:', error.message);
+    });
+},
     showEditModal(lesson) {
       this.selectedLesson = lesson;
       this.showModal = true;
@@ -183,6 +223,7 @@
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id: lessonId,
         idTeacher: this.selectedLesson.idTeacher,
         name: this.selectedLesson.name,
         description: this.selectedLesson.description,
@@ -213,57 +254,57 @@
       this.showAddForm = false;
     },
     addLesson() {
-  console.log('Ajout d\'une nouvelle leçon localement');
-  
-  // Envoie une requête POST à l'API pour ajouter la nouvelle leçon
-  fetch('http://127.0.0.1:8001/lessons', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(this.newLesson),
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Erreur lors de l\'ajout de la leçon');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Nouvelle leçon ajoutée avec succès sur le serveur');
-    const lessonId = data.id; // Récupérer l'ID de la nouvelle leçon
-    
-    // Envoie une requête POST à l'API pour ajouter un enregistrement dans classStudents
-    fetch('http://127.0.0.1:8001/classStudents', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        idLesson: lessonId, // Utiliser l'ID de la leçon nouvellement créée
-        idUsers: [],
-      }),
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'ajout de la leçon à classStudents');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Enregistrement ajouté avec succès à classStudents');
-    })
-    .catch(error => {
-      console.error('Erreur lors de l\'ajout de la leçon à classStudents:', error.message);
-    });
+      console.log('Ajout d\'une nouvelle leçon localement');
+      
+      // Envoie une requête POST à l'API pour ajouter la nouvelle leçon
+      fetch('http://127.0.0.1:8001/lessons', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.newLesson),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erreur lors de l\'ajout de la leçon');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Nouvelle leçon ajoutée avec succès sur le serveur');
+        const lessonId = data.id; // Récupérer l'ID de la nouvelle leçon
+        
+        // Envoie une requête POST à l'API pour ajouter un enregistrement dans classStudents
+        fetch('http://127.0.0.1:8001/classStudents', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            idLesson: lessonId, // Utiliser l'ID de la leçon nouvellement créée
+            idUsers: [],
+          }),
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erreur lors de l\'ajout de la leçon à classStudents');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Enregistrement ajouté avec succès à classStudents');
+        })
+        .catch(error => {
+          console.error('Erreur lors de l\'ajout de la leçon à classStudents:', error.message);
+        });
 
-    this.showAddForm = false; // Ferme le formulaire après l'ajout
-    this.fetchLessons(); // Rafraîchit la liste des leçons
-  })
-  .catch(error => {
-    console.error('Erreur lors de l\'ajout de la leçon sur le serveur:', error.message);
-  });
-},
+        this.showAddForm = false; // Ferme le formulaire après l'ajout
+        this.fetchLessons(); // Rafraîchit la liste des leçons
+      })
+      .catch(error => {
+        console.error('Erreur lors de l\'ajout de la leçon sur le serveur:', error.message);
+      });
+    },
 
     seeLesson(lessonId) {
       console.log(`Tentative de voir le cours avec l'ID ${lessonId}`);
