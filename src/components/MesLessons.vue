@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Mes Lessons</h1>
-        <div v-if="user">
+        <div  class="user-details" v-if="user">
             <p> ID:  {{ user.idUtilisateur }}</p> 
             <p> Nom:  {{ user.lastname }}</p>
             <p> Prénom:  {{ user.firstname }}</p>
@@ -10,7 +10,7 @@
             <!-- Ajoutez d'autres champs selon les besoins -->
         </div>
 
-    <div v-for="(lesson, index) in lessons" :key="index">
+        <div class="lesson-details" v-for="(lesson, index) in lessons" :key="index">
     <h2 v-if="lessonsDetails[index]">Lesson {{ lessonsDetails[index].idLesson }}</h2>
     <p> Nom:  {{ lesson[0].name }}</p>
     <p> Description:  {{ lesson[0].description }}</p>
@@ -114,7 +114,43 @@
     </script>
     
     <style scoped>
-    /* Ajoutez vos styles spécifiques ici */
-
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+    }
     
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    p {
+        color: #666;
+        margin: 5px 0;
+    }
+    
+    div {
+        margin-bottom: 20px;
+    }
+    
+    h2 {
+        color: #444;
+        margin-top: 20px;
+    }
+    
+    /* Style pour les détails de l'utilisateur */
+    .user-details {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Style pour les détails de la leçon */
+    .lesson-details {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    </style>
