@@ -9,7 +9,7 @@ import Meslessons from '@/views/Meslessons.vue';
 
 const routes = [
   { path: '/', component: Login },
-  { path: '/users', component: UserManagement, meta: { requiresAuth: true, role: 3 } },
+  { path: '/users', component: UserManagement, meta: { requiresAuth: true, role: 1 } },
   { path: '/lessons', component: LessonManagement, meta: { requiresAuth: true, role: 1 } },
   { path: '/attendance', component: AttendanceManagement, meta: { requiresAuth: true } },
   { path: '/lessons/:id', name: 'lesson-details', component: LessonsDetails, meta: { requiresAuth: true, role: 1 } },

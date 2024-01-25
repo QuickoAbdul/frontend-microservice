@@ -2,19 +2,19 @@
     <div>
         <h1>Mes Lessons</h1>
         <div v-if="user">
-            <p><strong>ID:</strong> {{ user.idUtilisateur }}</p> 
-            <p><strong>Nom:</strong> {{ user.lastname }}</p>
-            <p><strong>Prénom:</strong> {{ user.firstname }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Téléphone:</strong> {{ user.phone }}</p>
+            <p> ID:  {{ user.idUtilisateur }}</p> 
+            <p> Nom:  {{ user.lastname }}</p>
+            <p> Prénom:  {{ user.firstname }}</p>
+            <p> Email:  {{ user.email }}</p>
+            <p> Téléphone:  {{ user.phone }}</p>
             <!-- Ajoutez d'autres champs selon les besoins -->
         </div>
 
     <div v-for="(lesson, index) in lessons" :key="index">
     <h2 v-if="lessonsDetails[index]">Lesson {{ lessonsDetails[index].idLesson }}</h2>
-    <p><strong>Nom:</strong> {{ lesson[0].name }}</p>
-    <p><strong>Description:</strong> {{ lesson[0].description }}</p>
-    <p><strong>Date:</strong> {{ lesson[0].dateBegin }}</p>
+    <p> Nom:  {{ lesson[0].name }}</p>
+    <p> Description:  {{ lesson[0].description }}</p>
+    <p> Date:  {{ lesson[0].dateBegin }}</p>
     <!-- Affichez d'autres détails de la leçon selon les besoins -->
 </div>
     </div>
@@ -115,5 +115,6 @@
     
     <style scoped>
     /* Ajoutez vos styles spécifiques ici */
+
     </style>
     

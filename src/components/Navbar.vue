@@ -6,14 +6,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li v-if="role === 1" class="nav-item">
           <router-link to="/users" class="nav-link">Gestion Utilisateur</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="role === 1" class="nav-item">
           <router-link to="/lessons" class="nav-link">Cours & Planning</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="role === 1" class="nav-item">
           <router-link to="/attendance" class="nav-link">Présence</router-link>
+        </li>
+        <li v-if="role === 3" class="nav-item">
+          <router-link to="/meslessons" class="nav-link">Mes lessons</router-link>
         </li>
       </ul>
     </div>
@@ -33,6 +36,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      role: null, // Ajoutez le rôle de l'utilisateur
     };
   },
   methods: {
@@ -61,7 +65,9 @@ export default {
       
       // Mettre à jour les propriétés dans le composant
       this.isLoggedIn = true;
-      this.firstname = decodedToken.firstname; // Assurez-vous que le nom d'utilisateur est présent dans le token
+      this.firstname = decodedToken.firstname; 
+      this.role = decodedToken.user.idRole; // Assurez-vous que le rôle de l'utilisateur est présent dans le token
+// Assurez-vous que le nom d'utilisateur est présent dans le token
     }
   },
 };
