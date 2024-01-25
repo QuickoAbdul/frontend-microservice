@@ -9,6 +9,10 @@
         <label for="password">Mot de passe:</label>
         <input v-model="password" type="password" id="password" required>
   
+        <div v-if="loginError" class="error-message">
+        Erreur lors de la connexion. Veuillez vérifier vos informations.
+        </div>
+
         <button type="submit">Se connecter</button>
         <button v-if="token" @click="logout">Se déconnecter</button>
 
@@ -23,10 +27,14 @@ export default {
       email: 'user3@gmail.com', // Initialisez avec la valeur par défaut
       password: '12345678', // Initialisez avec la valeur par défaut
       token: null,
+      loginError: false, // Nouvelle propriété pour gérer les erreurs de connexion
+
     };
   },
   methods: {
     submitForm() {
+      this.loginError = false;
+
       const loginData = {
         email: this.email,
         password: this.password,
@@ -60,6 +68,7 @@ export default {
         })
         .catch(error => {
           console.error('Erreur lors de la connexion', error);
+          this.loginError = true; // Définir loginError à true en cas d'erreur de connexion
           // En cas d'échec de la connexion, effacer le token du localStorage
           localStorage.removeItem('token');
         });
@@ -101,3 +110,9 @@ export default {
 
   </script>
   
+  <style scoped>
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+</style>

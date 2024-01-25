@@ -46,6 +46,9 @@
   
           <label for="addLessonId">ID Cours:</label>
           <input type="text" id="addLessonId" v-model="newAttendance.lessonId">
+
+          <label for="addStatut">Status:</label>
+          <input type="text" id="addStatut" v-model="newAttendance.StatutId">
   
           <!-- Boutons Ajouter et Annuler -->
           <button class="btn btn-primary" @click="addAttendance">Ajouter</button>
@@ -140,6 +143,22 @@
   </script>
   
   <style scoped>
-  /* Ajoutez vos styles ici si nécessaire */
-  </style>
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}  </style>
   
