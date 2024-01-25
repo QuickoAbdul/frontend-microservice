@@ -112,21 +112,17 @@
           console.error('Erreur lors de la récupération des cours', error);
         }
       },
-  
       deleteAttendance(attendanceId) {
         // Simuler la suppression localement
         this.attendances = this.attendances.filter(attendance => attendance.id !== attendanceId);
   
       },
-  
       toggleAddForm() {
         this.showAddForm = !this.showAddForm;
       },
-  
       cancelAddForm() {
         this.showAddForm = false;
-      },
-  
+      },  
       addAttendance() {
         // Simuler l'ajout localement
         const newId = this.attendances.length + 1;

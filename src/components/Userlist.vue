@@ -39,8 +39,11 @@
       <div class="modal-content">
         <!-- Champs d'édition -->
         <label for="editIdRole">ID du rôle:</label>
-        <input type="text" id="editIdRole" v-model="selectedUser.idRole">
-
+        <select id="editIdRole" v-model="selectedUser.idRole">
+          <option value="1">Administrateur</option>
+          <option value="2">Enseignant</option>
+          <option value="3">Élève</option>
+        </select>
         <label for="editLastName">Nom:</label>
         <input type="text" id="editLastName" v-model="selectedUser.lastname">
 
@@ -66,7 +69,11 @@
       <div class="modal-content">
         <!-- Champs d'ajout -->
         <label for="addidRole">IdRole:</label>
-        <input type="text" id="addidRole" v-model="newUser.idRole">
+        <select id="addIdRole" v-model="newUser.idRole">
+          <option value="1">Administrateur</option>
+          <option value="2">Enseignant</option>
+          <option value="3">Élève</option>
+        </select>
 
         <label for="addLastName">Nom:</label>
         <input type="text" id="addLastName" v-model="newUser.lastname">
