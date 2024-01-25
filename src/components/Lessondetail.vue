@@ -19,18 +19,18 @@
     </div>
 
     <div v-if="showAddStudentForm" class="modal-overlay">
-  <div class="modal-content">
-    <label for="addUserId">Utilisateur souhaité</label>
-    <select v-model="newStudent.userId" id="addUserId">
-      <option v-for="user in users" :key="user.idUtilisateur" :value="user.idUtilisateur">
-        {{ user.lastname }} {{ user.firstname }}
-      </option>
-    </select>
-    <!-- Boutons Ajouter et Annuler -->
-    <button class="btn btn-primary" @click="addStudent">Ajouter</button>
-    <button class="btn btn-secondary" @click="cancelAddStudentForm">Annuler</button>
-  </div>
-</div>
+      <div class="modal-content">
+        <label for="addUserId">Utilisateur souhaité</label>
+        <select v-model="newStudent.userId" id="addUserId">
+          <option v-for="user in users" :key="user.idUtilisateur" :value="user.idUtilisateur">
+            {{ user.lastname }} {{ user.firstname }}
+          </option>
+        </select>
+        <!-- Boutons Ajouter et Annuler -->
+        <button class="btn btn-primary" @click="addStudent">Ajouter</button>
+        <button class="btn btn-secondary" @click="cancelAddStudentForm">Annuler</button>
+      </div>
+    </div>
 
   </div>
 </template>

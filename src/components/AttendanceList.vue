@@ -1,6 +1,15 @@
 <template>
     <div>
       <h1>Gestion des présences</h1>
+      
+      <!-- Ajout de la sélection d'étudiant -->
+      <label for="selectStudent">Sélectionner un étudiant:</label>
+      <select v-model="selectedStudentId" id="selectStudent" @change="fetchAttendances">
+        <option v-for="student in students" :key="student.id" :value="student.idUtilisateur">
+          {{ student.firstname }} {{ student.lastname }} {{ student.idUtilisateur }}
+        </option>
+      </select>
+      
       <button class="btn btn-success" @click="toggleAddForm">Ajouter une présence</button>
       <table class="table">
         <thead>
@@ -50,6 +59,8 @@
   export default {
     data() {
       return {
+        students: [], // Liste complète des étudiants
+        selectedStudentId: null, // ID de l'étudiant actuellement sélectionné
         attendances: [],
         showAddForm: false,
         newAttendance: {
@@ -60,12 +71,32 @@
       };
     },
     mounted() {
-      this.fetchAttendances();
+      this.fetchStudents();      
     },
     methods: {
+      async fetchStudents() {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch('http://localhost:8000/user', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur lors de la récupération des étudiants');
+        }
+
+        const data = await response.json();
+        this.students = data;
+      } catch (error) {
+        console.error('Erreur lors de la récupération des étudiants', error);
+      }
+      },
      async fetchAttendances() {
         try {
-          const response = await fetch('http://localhost:3000/attendance/student/1', {
+          const response = await fetch(`http://localhost:3000/attendance/student/${this.selectedStudentId}`, {
             headers: {
               'Content-Type': 'application/json',
             },
