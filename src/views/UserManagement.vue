@@ -1,7 +1,5 @@
 <template>
     <div>
-      <h2>Gestion Utilisateur</h2>
-      <!-- Ajoute les composants nécessaires ici -->
         <Userlist />
     </div>
   </template>

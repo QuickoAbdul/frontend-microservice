@@ -29,10 +29,10 @@
             <td>{{ attendance.lessonId }}</td>
             <td>{{ attendance.status }}</td>
             <td>
-              <button class="btn btn-danger" @click="deleteAttendance(attendance.id)">Supprimer</button>
+              <button class="btn btn-danger" @click="changerstatus(attendance.id)">Changerstatus</button>
             </td>
             <td>
-              <button class="btn btn-danger" @click="voirplus(attendance.id)">Supprimer</button>
+              <button class="btn btn-danger" @click="deleteAttendance(attendance.id)">Supprimer</button>
             </td>
           </tr>
         </tbody>
@@ -115,6 +115,43 @@
           console.error('Erreur lors de la récupération des cours', error);
         }
       },
+      async changerstatus(attendanceId) {
+    // Trouver l'index de l'attendance dans le tableau
+    const index = this.attendances.findIndex(attendance => attendance.id === attendanceId);
+
+    if (index !== -1) {
+      // Changer le statut
+      const currentStatus = this.attendances[index].status;
+      const newStatus = currentStatus === 'absent' ? 'present' : 'absent';
+      const studentId = this.attendances[index].studentId;
+      const lessonId = this.attendances[index].lessonId;
+
+      // Effectuer la mise à jour localement
+      this.attendances[index].status = newStatus;
+
+      // En cas d'utilisation réelle de l'API, faire une requête PATCH à l'API ici
+      // Remplacez l'URL et la méthode en fonction de l'API réelle
+      try {
+        const response = await fetch(`http://localhost:3000/call_attendance/${lessonId}/${studentId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify({ status: newStatus }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur lors de la mise à jour du statut de présence');
+        }
+
+        const data = await response.json();
+        console.log('Statut de présence mis à jour avec succès:', data);
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut de présence', error);
+      }
+    }
+  },
       deleteAttendance(attendanceId) {
         // Simuler la suppression localement
         this.attendances = this.attendances.filter(attendance => attendance.id !== attendanceId);

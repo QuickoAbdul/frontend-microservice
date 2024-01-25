@@ -2,7 +2,7 @@
     <div>
         <h1>Mes Lessons</h1>
         <div  class="user-details" v-if="user">
-            <p> ID:  {{ user.idUtilisateur }}</p> 
+            <h2>Vos informations : </h2>
             <p> Nom:  {{ user.lastname }}</p>
             <p> Prénom:  {{ user.firstname }}</p>
             <p> Email:  {{ user.email }}</p>
@@ -14,7 +14,9 @@
     <h2 v-if="lessonsDetails[index]">Lesson {{ lessonsDetails[index].idLesson }}</h2>
     <p> Nom:  {{ lesson[0].name }}</p>
     <p> Description:  {{ lesson[0].description }}</p>
-    <p> Date:  {{ lesson[0].dateBegin }}</p>
+    <p>Début: {{ formatLessonDate(lesson[0].dateBegin) }}</p>
+    <p>Fin: {{ formatLessonDate(lesson[0].dateEnd) }}</p>
+
     <!-- Affichez d'autres détails de la leçon selon les besoins -->
 </div>
     </div>
@@ -30,30 +32,30 @@
         };
         },
         async mounted() {
-  // Chargez les leçons de l'utilisateur au moment de l'initialisation du composant
-  this.user = await this.fetchUsersById(this.$route.params.id);
-  this.lessonsDetails = await this.fetchLessonDetails(this.$route.params.id);
+        // Chargez les leçons de l'utilisateur au moment de l'initialisation du composant
+        this.user = await this.fetchUsersById(this.$route.params.id);
+        this.lessonsDetails = await this.fetchLessonDetails(this.$route.params.id);
 
-  console.log('lessonsDetails after initialization:', this.lessonsDetails);
+        console.log('lessonsDetails after initialization:', this.lessonsDetails);
 
-  // Convertissez lessonsDetails en un tableau
-  const lessonsDetailsArray = Object.values(this.lessonsDetails);
+        // Convertissez lessonsDetails en un tableau
+        const lessonsDetailsArray = Object.values(this.lessonsDetails);
 
-  // Créez un tableau pour stocker les détails des leçons
-  this.lessons = [];
+        // Créez un tableau pour stocker les détails des leçons
+        this.lessons = [];
 
-  // Parcourez chaque leçon dans lessonsDetailsArray
-  for (let detail of lessonsDetailsArray) {
-    // Récupérez les détails de la leçon avec l'ID de la leçon
-    const lesson = await this.fetchLessonByIdLesson(detail.idLesson);
+        // Parcourez chaque leçon dans lessonsDetailsArray
+        for (let detail of lessonsDetailsArray) {
+            // Récupérez les détails de la leçon avec l'ID de la leçon
+            const lesson = await this.fetchLessonByIdLesson(detail.idLesson);
 
-    // Ajoutez les détails de la leçon au tableau lessons
-    this.lessons.push(lesson);
-  }
+            // Ajoutez les détails de la leçon au tableau lessons
+            this.lessons.push(lesson);
+        }
 
-  console.log('lessons:', this.lessons);
-  console.log('lessonsDetails:', this.lessonsDetails);
-},
+        console.log('lessons:', this.lessons);
+        console.log('lessonsDetails:', this.lessonsDetails);
+        },
         methods: {
         async fetchUsersById(userId) {
         const token = localStorage.getItem('token');
@@ -107,7 +109,20 @@
         } catch (error) {
             console.error('Erreur lors de la récupération des détails de la leçon', error);
         }
-        }
+        },
+        formatLessonDate(isoDate) {
+        const date = new Date(isoDate);
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            timeZoneName: 'short',
+        };
+        return date.toLocaleDateString('fr-FR', options);
+        },
         
         },
     };

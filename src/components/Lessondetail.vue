@@ -204,5 +204,49 @@ export default {
 </script>
 
 <style scoped>
+  /* Style pour la page de détails de la leçon */
+  h2 {
+    margin-bottom: 20px;
+  }
 
+  .btn-primary {
+    margin-bottom: 20px;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Style pour la liste des utilisateurs participants à la leçon */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  /* Style pour les boutons de suppression */
+  .btn-danger {
+    margin-left: 10px;
+  }
 </style>

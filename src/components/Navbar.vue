@@ -1,33 +1,57 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link to="/" class="navbar-brand">Gestion des cours</router-link>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li v-if="role === 1" class="nav-item">
-          <router-link to="/users" class="nav-link">Gestion Utilisateur</router-link>
-        </li>
-        <li v-if="role === 1" class="nav-item">
-          <router-link to="/lessons" class="nav-link">Cours & Planning</router-link>
-        </li>
-        <li v-if="role === 1" class="nav-item">
-          <router-link to="/attendance" class="nav-link">Présence</router-link>
-        </li>
-        <li v-if="role === 3" class="nav-item">
-          <router-link to="/meslessons" class="nav-link">Mes lessons</router-link>
-        </li>
-      </ul>
-    </div>
+  <!-- Sidebar -->
+  <ul
+				class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('module_list') }}">
+					<div class="sidebar-brand-icon rotate-n-15">
+						<i class="fas fa-laugh-wink"></i>
+					</div>
+          <router-link to="/" class="navbar-brand">Ecole</router-link>
+				</a>
+				<!-- Divider -->
+				<hr
+				class="sidebar-divider">
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item active">
+          <div>
+        <span v-if="isLoggedIn" class="nav-link">{{ firstname }}</span>
+        <router-link v-if="isLoggedIn" @click.prevent="logout" class="nav-link" to="#">Déconnexion</router-link>
+        <router-link v-else to="/" class="nav-link">Connexion</router-link>
+      </div>
+					<a class="nav-link"  v-if="role === 1">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span><router-link to="/users" class="nav-link">Gestion Utilisateur</router-link></span>
+					</a>
+          <a class="nav-link"  v-if="role === 1">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span><router-link to="/lessons" class="nav-link">Cours & Planning</router-link></span>
+					</a>
+          <a class="nav-link"  v-if="role === 1">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span><router-link to="/attendance" class="nav-link">Présence</router-link></span>
+					</a>
+          <a  v-if="role === 3" class="nav-link">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span><router-link to="/meslessons" class="nav-link">Mes lessons</router-link></span>
+					</a>
+				</li>
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+				<div class="sidebar-heading">
+					Autres
+				</div>
+				<!-- Divider -->
+				<hr
+				class="sidebar-divider d-none d-md-block">
 
-    <div class="ml-auto">
-  <span v-if="isLoggedIn" class="nav-link">{{ firstname }}</span>
-  <router-link v-if="isLoggedIn" @click.prevent="logout" class="nav-link" to="#">Déconnexion</router-link>
-  <router-link v-else to="/" class="nav-link">Connexion</router-link>
-</div>
+				<!-- Sidebar Toggler (Sidebar) -->
+				<div class="text-center d-none d-md-inline">
+					<button class="rounded-circle border-0" id="sidebarToggle"></button>
+				</div>
+			</ul>
+      <!-- End of Sidebar -->
 
-  </nav>
 </template>
 
 <script>
