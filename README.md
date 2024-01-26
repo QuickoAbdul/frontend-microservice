@@ -59,10 +59,10 @@ php bin/console d:m:m
 
 Enfin executer le serveur 
 ```sh
-Symfony serve
+symfony server:start --port=8001
 ```
 
-Ce microservice sera alors executer sur le port (127.0.0.1:8000)
+Ce microservice sera alors executer sur le port (127.0.0.1:8001)
 
 ### : Terminal Users_management 
 - Déplacer vous dans le terminal Users_management
