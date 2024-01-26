@@ -29,7 +29,7 @@
             <td>{{ attendance.lessonId }}</td>
             <td>{{ attendance.status }}</td>
             <td>
-              <button class="btn btn-danger" @click="changerstatus(attendance.id)">Changerstatus</button>
+              <button class="btn btn-warning" @click="changerstatus(attendance.id)">Changerstatus</button>
             </td>
             <td>
               <button class="btn btn-danger" @click="deleteAttendance(attendance.id)">Supprimer</button>
@@ -62,6 +62,7 @@
   export default {
     data() {
       return {
+        lessons: [],
         students: [], // Liste complète des étudiants
         selectedStudentId: null, // ID de l'étudiant actuellement sélectionné
         attendances: [],
@@ -77,6 +78,24 @@
       this.fetchStudents();      
     },
     methods: {
+        async fetchLessons() {
+          try {
+            const response = await fetch('http://127.0.0.1:8001/lessons', {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+    
+            if (!response.ok) {
+              throw new Error('Erreur lors de la récupération des cours');
+            }
+    
+            const data = await response.json();
+            this.lessons = data;
+          } catch (error) {
+            console.error('Erreur lors de la récupération des cours', error);
+          }
+      },
       async fetchStudents() {
       const token = localStorage.getItem('token');
       try {
@@ -97,7 +116,7 @@
         console.error('Erreur lors de la récupération des étudiants', error);
       }
       },
-     async fetchAttendances() {
+      async fetchAttendances() {
         try {
           const response = await fetch(`http://localhost:3000/attendance/student/${this.selectedStudentId}`, {
             headers: {
@@ -151,7 +170,7 @@
         console.error('Erreur lors de la mise à jour du statut de présence', error);
       }
     }
-  },
+      },
       deleteAttendance(attendanceId) {
         // Simuler la suppression localement
         this.attendances = this.attendances.filter(attendance => attendance.id !== attendanceId);

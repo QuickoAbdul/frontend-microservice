@@ -53,6 +53,14 @@
   </template>
   
   <script>
+  const apiuser = import.meta.env.VITE_APP_API_USER; //35.180.119.209
+  const apimanagement = import.meta.env.VITE_APP_API_MANAGEMENT; //35.181.54.149
+  const apiattendance = import.meta.env.VITE_APP_API_ATTENDANCE; //51.44.17.51
+
+  console.log(apiuser);
+  console.log(apimanagement);
+  console.log(apiattendance);
+
 export default {
   data() {
     return {

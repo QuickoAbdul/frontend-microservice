@@ -18,6 +18,10 @@
       </ul>
     </div>
 
+    <div v-if="loginError" class="error-message">
+      Utilisateur déjà existant
+    </div>
+
     <div v-if="showAddStudentForm" class="modal-overlay">
       <div class="modal-content">
         <label for="addUserId">Utilisateur souhaité</label>
@@ -48,6 +52,8 @@ export default {
       },
       users: [],
       exemple: [], // Utilisez la liste mockée des utilisateurs
+      loginError: false, // Nouvelle propriété pour gérer les erreurs de connexion
+
     };
   },
   mounted() {
@@ -91,6 +97,8 @@ export default {
       const userIdToAdd = parseInt(this.newStudent.userId, 10);
       if (currentLessonDetails.idUsers.includes(userIdToAdd)) {
         console.warn('Cet utilisateur est déjà ajouté à la leçon.');
+        this.showAddStudentForm = false;
+        this.loginError = true;
         return; // Arrêter l'exécution si l'utilisateur est déjà dans la liste
       }
 
@@ -115,6 +123,7 @@ export default {
         .catch(error => {
           console.error('Erreur lors de la mise à jour des étudiants de la leçon sur le serveur:', error.message);
         });
+        this.showAddStudentForm = false;
     },
     removeStudent(userId) {
       console.log('Suppression de l\'utilisateur avec ID:', userId);
@@ -249,4 +258,9 @@ export default {
   .btn-danger {
     margin-left: 10px;
   }
+
+  .error-message {
+  color: red;
+  margin-top: 10px;
+}
 </style>
