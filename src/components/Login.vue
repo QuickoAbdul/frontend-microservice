@@ -59,8 +59,8 @@
 export default {
   data() {
     return {
-      email: 'user3@gmail.com', // Initialisez avec la valeur par défaut
-      password: '12345678', // Initialisez avec la valeur par défaut
+      email: 'mattheo.valcke@gmail.com', // Initialisez avec la valeur par défaut
+      password: '!!Toto123!!', // Initialisez avec la valeur par défaut
       token: null,
       loginError: false, // Nouvelle propriété pour gérer les erreurs de connexion
 
@@ -77,7 +77,7 @@ export default {
 
       const queryString = new URLSearchParams(loginData).toString();
 
-      fetch(`http://localhost:8000/login?${queryString}`)
+      fetch(`http://${apiuser}:8000/login?${queryString}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Erreur lors de la connexion');

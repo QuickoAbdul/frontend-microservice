@@ -90,7 +90,7 @@ export default {
   methods: {
     async fetchClassStudents() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/classStudents', {
+        const response = await fetch(`http://${apimanagement}/classStudents`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -114,7 +114,7 @@ export default {
 
         console.log(`Classe avec l'ID ${classStudentId} supprimée localement avec succès`);
 
-        fetch(`http://127.0.0.1:8000/classStudents?id=${classStudentId}`, {
+        fetch(`http:/${apimanagement}0/classStudents?id=${classStudentId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ export default {
       const classStudentId = this.selectedClassStudent.id;
 
       // Envoie une requête PATCH à l'API pour mettre à jour la classe
-      fetch(`http://127.0.0.1:8000/classStudents?id=${classStudentId}`, {
+      fetch(`http://${apimanagement}/classStudents?id=${classStudentId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -188,7 +188,7 @@ export default {
       console.log('Ajout d\'une nouvelle classe localement');
 
       // Envoie une requête POST à l'API pour ajouter la nouvelle classe
-      fetch('http://127.0.0.1:8000/classStudents', {
+      fetch(`http://${apimanagement}/classStudents`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -130,7 +130,7 @@ export default {
     async fetchUsers() {
       const token = localStorage.getItem('token');
       try {
-        const response = await fetch('http://127.0.0.1:8000/user', {
+        const response = await fetch(`http://${apiuser}:8000/user`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête
@@ -158,7 +158,7 @@ export default {
       if (index !== -1) {
         this.users.splice(index, 1);
 
-        fetch(`http://127.0.0.1:8000/user/${userId}`, {
+        fetch(`http://${apiuser}:8000/user/${userId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ export default {
       const userId = this.selectedUser.idUtilisateur;
       const token = localStorage.getItem('token');
 
-      fetch(`http://127.0.0.1:8000/user/${userId}`, {
+      fetch(`http://${apiuser}:8000/user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -234,7 +234,9 @@ export default {
       console.log('Ajout d\'un nouvel utilisateur localement');
       const token = localStorage.getItem('token');
 
-      fetch('http://127.0.0.1:8000/user', {
+      console.log(token);
+      console.log(this.newUser);
+      fetch(`http://${apiuser}:8000/user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

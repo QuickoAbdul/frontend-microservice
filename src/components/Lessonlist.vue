@@ -111,7 +111,7 @@
     methods: {
     async fetchLessons() {
         try {
-          const response = await fetch('http://127.0.0.1:8001/lessons', {
+          const response = await fetch(`http://${apimanagement}/lessons`, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -136,7 +136,7 @@
     console.log(`Tentative de suppression du cours avec l'ID ${lessonId}`);
 
     // Récupérer l'ID de la leçon associée à classStudents
-    fetch(`http://127.0.0.1:8001/classStudents?idLesson=${lessonId}`)
+    fetch(`http://${apimanagement}/classStudents?idLesson=${lessonId}`)
     .then(response => {
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération de l\'ID de la leçon dans classStudents');
@@ -149,7 +149,7 @@
             console.log(`ID de classStudents associé à la leçon avec l'ID ${lessonId} : ${classStudentsId}`);
             
             // Suppression de l'enregistrement dans classStudents côté serveur
-            return fetch(`http://127.0.0.1:8001/classStudents?id=${classStudentsId}`, {
+            return fetch(`http://${apimanagement}/classStudents?id=${classStudentsId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -171,7 +171,7 @@
             console.log(`Enregistrement de classStudents pour la leçon avec l'ID ${lessonId} supprimé avec succès sur le serveur`);
             
             // Suppression de la leçon côté serveur
-            return fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
+            return fetch(`http://${apimanagement}/lessons?id=${lessonId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -219,7 +219,7 @@
     const lessonId = this.selectedLesson.id;
 
     // Envoie une requête PATCH à l'API pour mettre à jour le cours
-    fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
+    fetch(`http://${apimanagement}/lessons?id=${lessonId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -259,7 +259,7 @@
       console.log('Ajout d\'une nouvelle leçon localement');
       
       // Envoie une requête POST à l'API pour ajouter la nouvelle leçon
-      fetch('http://127.0.0.1:8001/lessons', {
+      fetch(`http://${apimanagement}/lessons`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -277,7 +277,7 @@
         const lessonId = data.id; // Récupérer l'ID de la nouvelle leçon
         
         // Envoie une requête POST à l'API pour ajouter un enregistrement dans classStudents
-        fetch('http://127.0.0.1:8001/classStudents', {
+        fetch(`http://${apimanagement}/classStudents`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -307,7 +307,6 @@
         console.error('Erreur lors de l\'ajout de la leçon sur le serveur:', error.message);
       });
     },
-
     seeLesson(lessonId) {
       console.log(`Tentative de voir le cours avec l'ID ${lessonId}`);
       this.$router.push({ name: 'lesson-details', params: { id: lessonId } });

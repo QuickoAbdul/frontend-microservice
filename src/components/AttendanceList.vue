@@ -60,6 +60,7 @@
   
   <script>
   import { apiuser, apimanagement, apiattendance } from '@/config';
+  const token = localStorage.getItem('token');
 
   export default {
     data() {
@@ -82,7 +83,7 @@
     methods: {
       async fetchLessons() {
           try {
-            const response = await fetch('http://127.0.0.1:8001/lessons', {
+            const response = await fetch(`http://${apimanagement}/lessons`, {
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -99,9 +100,8 @@
           }
       },
       async fetchStudents() {
-      const token = localStorage.getItem('token');
       try {
-        const response = await fetch('http://localhost:8000/user', {
+        const response = await fetch(`http://${apiuser}:8000/user`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête
@@ -120,9 +120,10 @@
       },
       async fetchAttendances() {
         try {
-          const response = await fetch(`http://localhost:3000/attendance/student/${this.selectedStudentId}`, {
+          const response = await fetch(`http://${apiattendance}:80/attendance/student/${this.selectedStudentId}`, {
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `${token}`, // Ajouter le token d'authentification à l'en-tête
             },
           });
   
@@ -153,11 +154,11 @@
       // En cas d'utilisation réelle de l'API, faire une requête PATCH à l'API ici
       // Remplacez l'URL et la méthode en fonction de l'API réelle
       try {
-        const response = await fetch(`http://localhost:3000/call_attendance/${lessonId}/${studentId}`, {
+        const response = await fetch(`http://${apiattendance}:80/call_attendance/${lessonId}/${studentId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Authorization': `${token}`, // Ajouter le token d'authentification à l'en-tête
           },
           body: JSON.stringify({ status: newStatus }),
         });
@@ -185,17 +186,42 @@
         this.showAddForm = false;
       },  
       addAttendance() {
-        // Simuler l'ajout localement
-        const newId = this.attendances.length + 1;
-        const newAttendance = { id: newId, ...this.newAttendance };
-        this.attendances.push(newAttendance);
-  
-        // En cas d'utilisation réelle de l'API, faire une requête POST à l'API ici
-  
-        // Réinitialisez le formulaire et masquez-le
-        this.newAttendance = { studentId: null, lessonId: null };
-        this.showAddForm = false;
-      },
+      // Récupérer les informations nécessaires
+      const lessonId = this.newAttendance.lessonId;
+
+      // Construire le tableau de présence avec les étudiants et le statut "absent"
+      const attendanceData = this.students.map(student => ({
+        studentId: student.idUtilisateur,
+        status: this.newAttendance.status || "absent", // Utilisez le statut fourni ou "absent" par défaut
+      }));
+
+      // Effectuer la requête POST à l'API
+      fetch(`http://${apiattendance}:80/call_attendance/${lessonId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`, // Ajouter le token d'authentification à l'en-tête
+        },
+        body: JSON.stringify(attendanceData),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erreur lors de l\'ajout des présences');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Présences ajoutées avec succès:', data);
+
+          // Réinitialiser le formulaire et masquer-le
+          this.newAttendance = { studentId: null, lessonId: null };
+          this.showAddForm = false;
+        })
+        .catch(error => {
+          console.error('Erreur lors de l\'ajout des présences', error);
+        });
+    },
+
     },
   };
   </script>

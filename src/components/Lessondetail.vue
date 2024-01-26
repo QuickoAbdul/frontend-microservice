@@ -66,7 +66,7 @@ export default {
   methods: {
     async fetchLessonDetails(lessonId) {
       try {
-        const response = await fetch(`http://127.0.0.1:8001/classStudents?idLesson=${lessonId}`, {
+        const response = await fetch(`http://${apimanagement}/classStudents?idLesson=${lessonId}`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -111,7 +111,7 @@ export default {
       };
 
       // Envoie une requête PATCH à l'API pour mettre à jour la leçon avec les nouvelles valeurs
-      fetch(`http://127.0.0.1:8001/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
+      fetch(`http://${apimanagement}/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
         method: 'PATCH',  // Ou PATCH selon ce que l'API supporte
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ export default {
         idUsers: currentLessonDetails.idUsers.filter(id => id !== userId),
       };
 
-      fetch(`http://127.0.0.1:8001/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
+      fetch(`http://${apimanagement}/classStudents?idLesson=${currentLessonDetails.idLesson}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ export default {
     },
     async getLessonById(lessonId) {
       try {
-        const response = await fetch(`http://127.0.0.1:8001/lessons?id=${lessonId}`, {
+        const response = await fetch(`http://${apimanagement}/lessons?id=${lessonId}`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -171,7 +171,7 @@ export default {
     async fetchUsers() {
       const token = localStorage.getItem('token');
       try {
-        const response = await fetch('http://127.0.0.1:8000/user', {
+        const response = await fetch(`http://${apiuser}:8000/user`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification à l'en-tête

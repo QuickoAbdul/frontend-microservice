@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Mes Lessons</h1>
+        <h1> Mes leçons</h1>
         <div  class="user-details" v-if="user">
             <h2>Vos informations : </h2>
             <p> Nom:  {{ user.lastname }}</p>
@@ -62,7 +62,7 @@
         async fetchUsersById(userId) {
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`http://127.0.0.1:8000/user/${userId}`, {
+            const response = await fetch(`http://${apiuser}:8000/user/${userId}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
@@ -80,7 +80,7 @@
         },
         async fetchLessonDetails(userId) {
         try {
-            const response = await fetch(`http://localhost:8001/classStudents?idUser=${userId}`, {
+            const response = await fetch(`http://${apimanagement}/classStudents?idUser=${userId}`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -97,7 +97,7 @@
         },
         async fetchLessonByIdLesson(idLesson) {
         try {
-            const response = await fetch(`http://localhost:8001/lessons?id=${idLesson}`, {
+            const response = await fetch(`http://${apimanagement}/lessons?id=${idLesson}`, {
             headers: {
                 'Content-Type': 'application/json',
             },

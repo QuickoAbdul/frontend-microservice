@@ -1,6 +1,5 @@
 <template>
     <h2>
-        Mes prochaines leçons
         <MesLessons/>
     </h2>
 </template>

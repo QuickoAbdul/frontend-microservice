@@ -30,7 +30,7 @@
     async fetchUsersById(userId) {
     const token = localStorage.getItem('token');
     try {
-        const response = await fetch(`http://127.0.0.1:8000/user/${userId}`, {
+        const response = await fetch(`http://${apiuser}:8000/user/${userId}`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
