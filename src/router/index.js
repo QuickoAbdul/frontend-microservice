@@ -5,7 +5,7 @@ import AttendanceManagement from '@/views/AttendanceManagement.vue';
 import LessonsDetails from '@/views/LessonsDetails.vue';
 import UserDetails from '@/views/UserDetails.vue';
 import Login from '../components/Login.vue';
-import Meslessons from '@/views/Meslessons.vue';
+import Meslessons from '@/views/MesLessons.vue';
 
 const routes = [
   { path: '/', component: Login },
