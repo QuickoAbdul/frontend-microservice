@@ -59,6 +59,8 @@
   </template>
   
   <script>
+  import { apiuser, apimanagement, apiattendance } from '@/config';
+
   export default {
     data() {
       return {
@@ -78,7 +80,7 @@
       this.fetchStudents();      
     },
     methods: {
-        async fetchLessons() {
+      async fetchLessons() {
           try {
             const response = await fetch('http://127.0.0.1:8001/lessons', {
               headers: {

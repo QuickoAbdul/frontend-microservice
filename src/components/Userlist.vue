@@ -99,6 +99,9 @@
 </template>
 
 <script>
+import { apiuser, apimanagement, apiattendance } from '@/config';
+
+
 export default {
   data() {
     return {

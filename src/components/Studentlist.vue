@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { apiuser, apimanagement, apiattendance } from '@/config';
 import { usersmocks } from "../mocks/user";
 
 export default {

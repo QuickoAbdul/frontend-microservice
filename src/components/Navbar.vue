@@ -55,6 +55,9 @@
 </template>
 
 <script>
+import { apiuser, apimanagement, apiattendance } from '@/config';
+
+
 export default {
   name: 'Navbar',
   data() {
